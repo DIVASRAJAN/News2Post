@@ -86,9 +86,6 @@ def agent_creation(user_query):
     logging.info("Agent created successfully.")
     response = agent.invoke({"messages": user_query})
     result = response["messages"][-1].content
-    print("Agent response:", result)
     new_result = clean_json_response(result)
-    print("cleaned response", new_result)
     new_result = json.loads(new_result)
-    print("after json", new_result)
     return new_result
