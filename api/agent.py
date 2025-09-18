@@ -33,7 +33,7 @@ def load_yaml(file_path):
         data = yaml.safe_load(file)
     return data
 
-data = load_yaml("prompts.yaml")
+data = load_yaml("api/prompts.yaml")
 PROMPT = data["PROMPT"]
 system_prompt = data["system_prompt"]
 
