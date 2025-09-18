@@ -50,30 +50,6 @@ def generate_post(request: TopicRequest):
         logging.exception("Error in generating post")
         raise HTTPException(status_code=500, detail=str(e))
 
-@app.get("/generate-post", response_model=PostResponse)
-def get_generate_post(request: TopicRequest):
-    
-    try:
-        # Build input format for agent
-        user_input = request.topic
-
-        # Call your agent function
-        result = agent_creation(user_input)
-
-        if isinstance(result, str):
-            import json
-            result = json.loads(result)  # Make sure your agent returns JSON-serializable content
-
-        return PostResponse(
-            topic=request.topic,
-            news_sources=result.get("links", []),
-            linkedin_post=result.get("post", "No content generated."),
-            # image_suggestion=result.get("image_suggestion", None)
-        )
-
-    except Exception as e:
-        logging.exception("Error in generating post")
-        raise HTTPException(status_code=500, detail=str(e))
 
 if __name__ == "__main__":
     import uvicorn
