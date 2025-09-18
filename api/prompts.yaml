@@ -22,4 +22,5 @@ system_prompt : |
   provide he output in JSON format with the following keys:
   {
     "post": "The LinkedIn post content",
-    "links" : ["List of relevant links if any"]}
+    "links" : ["List of relevant links if any"]
+  }

@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "functions": {
+    "api/main.py": {
+      "runtime": "python3.13"
+    }
+  },
+  "routes": [
+    {
+      "src": "/generate-post",
+      "dest": "/api/main.py"
+    }
+  ]
+}

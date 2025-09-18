@@ -2,9 +2,10 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from typing import List, Optional
 import logging
+from mangum import Mangum
 
 # from your_agent_module import create_react_agent, llm, news2post, system_prompt
-from agent import agent_creation
+from api.agent import agent_creation
 
 app = FastAPI(
     title="News to LinkedIn Post Generator",
@@ -30,7 +31,7 @@ class PostResponse(BaseModel):
 def generate_post(request: TopicRequest):
     try:
         # Build input format for agent
-        user_input = {request.topic}
+        user_input = request.topic
 
         print("inputttttttttttttttttt",user_input)
 
@@ -51,6 +52,8 @@ def generate_post(request: TopicRequest):
     except Exception as e:
         logging.exception("Error in generating post")
         raise HTTPException(status_code=500, detail=str(e))
+
+handler = Mangum(app)
 
 if __name__ == "__main__":
     import uvicorn

@@ -8,7 +8,7 @@ from langgraph.prebuilt import create_react_agent
 from dotenv import load_dotenv
 import os
 import yaml
-import logging
+import logging, json, re
 
 load_dotenv()
 
@@ -36,6 +36,15 @@ def load_yaml(file_path):
 data = load_yaml("prompts.yaml")
 PROMPT = data["PROMPT"]
 system_prompt = data["system_prompt"]
+
+def clean_json_response(response):
+    # Remove markdown-like code fences (``` or ''') and optional json label
+    response = re.sub(r"^[`']{3}json\s*|[`']{3}$", "", response.strip(), flags=re.IGNORECASE)
+
+    # Attempt to fix missing quotes on string values (basic case)
+    response = re.sub(r'("post"\s*:\s*)([a-zA-Z0-9_]+)', r'\1"\2"', response)
+
+    return response
 
 def news_extraction(topic):
   """Extract news links and snippets about a given topic using Google Serper API."""
@@ -73,8 +82,13 @@ def agent_creation(user_query):
         model=llm,
         tools=[news2post],
         prompt=system_prompt,
-
     )
     logging.info("Agent created successfully.")
     response = agent.invoke({"messages": user_query})
-    return response["messages"][-1].content
+    result = response["messages"][-1].content
+    print("Agent response:", result)
+    new_result = clean_json_response(result)
+    print("cleaned response", new_result)
+    new_result = json.loads(new_result)
+    print("after json", new_result)
+    return new_result
