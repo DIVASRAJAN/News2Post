@@ -60,3 +60,20 @@ News2Post/
 ## Usage
 
 Send a request to the API endpoint with your topic of interest, and receive a LinkedIn-ready post based on the latest news.
+
+### input
+
+{
+  "topic": "string"
+}
+
+### output
+
+{
+  "topic": "string",
+  "news_sources": [
+    "string"
+  ],
+  "linkedin_post": "string",
+  "image_suggestion": "string"
+}
