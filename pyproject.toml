@@ -6,6 +6,7 @@ readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
     "fastapi>=0.116.2",
+    "gradio>=5.47.2",
     "langchain>=0.3.27",
     "langchain-community>=0.3.29",
     "langchain-google-genai>=2.1.12",

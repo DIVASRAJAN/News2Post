@@ -26,6 +26,10 @@ class PostResponse(BaseModel):
 
 # === FastAPI Endpoint ===
 
+@app.get("/health")
+def health_check():
+    return {"status": "ok"}
+
 @app.post("/generate-post", response_model=PostResponse)
 def generate_post(request: TopicRequest):
     try:
